@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trabalho Final</title>
+  </head>
+  <body>
+    <main id="main" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <h1>Bem vindo!</h1>
+        <h3>Insira um valor número no input e pressione o botão para somar 2</h3>        
+        <input id="numberInput" type="number"/>
+        <button id="submitButton" style="margin-top: 10px;">Somar 2</button>
+        <p id="result"></p>
+    </main>
+  </body>
+  <script>
+      function handleRequest() {
+          const inputValue = document.getElementById("numberInput").value
+        
+          if(!!inputValue){
+              fetch(`http://localhost:8080/calculate?toCalculate=${inputValue}`)
+              .then(response => response.json())
+              .then(data => {
+                const paragraph = document.getElementById("result")
+                paragraph.innerHTML = data.result
+              })
+          }
+          else{
+            const paragraph = document.getElementById("result")
+            paragraph.innerHTML = "Insira um número no input e pressione o botão"
+          }
+      }
+
+      function setup(){
+          const button = document.getElementById("submitButton")
+          button.addEventListener("click", handleRequest)
+      }
+
+      setup()
+  </script>
+</html>
